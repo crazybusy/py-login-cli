@@ -3,7 +3,7 @@
 "description":"Command line login for python applications including suppport for OTP via Authenticator Apps",
 "parameters":{
 "create":{"short":"-c",	"long":"--create",
-	"default" : "false",
+	"default" : "true",
 	"help": "Allows to create the user if it doesnt exist"},
 "no_otp":{"short":"-n", "long":"--no-otp",
 	"default" : "false",

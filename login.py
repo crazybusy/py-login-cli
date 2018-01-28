@@ -2,7 +2,9 @@ import json, enum
 import pyotp, qrcode
 import os
 import logging
+
 from getpass import getpass
+from bcrypt import hashpw, gensalt
 
 #-----------------------Functions----------------------------------------
 
@@ -70,6 +72,7 @@ def login(app_name, payload = None):
     username = input ()
 
     password = getpass("Password: ")
+    
 
 #Load the details of the user from file
     user = read_user_file(username)       
@@ -91,7 +94,7 @@ OTP Support
                 status= login_failed(user, payload, FAIL_REASONS.INCORRECT_OTP)                
         else:
 #If the user is not otp enabled or otp flag is false, check password            
-            if password == user.get('password'):                
+            if hashpw(password.encode('utf-8'), user.get('password').encode('utf-8')).decode("utf-8") == user.get('password'):                
 #If the offer otp flag is set, then offer the user the option to upgrade to OTP                
                 if options.offer_otp and\
                     not(user.get('otp_enabled')):
@@ -106,11 +109,12 @@ OTP Support
     elif options.create:
 #If the create flag is set, create the user by asking for repeat password        
         print ("User %s not found. Enter password again to create"% username)
-        
-        if password == input ():
+        salt = gensalt()
+        if hashpw(password.encode('utf-8'),salt) == hashpw(getpass("Password: ").encode('utf-8')
+                              , salt ):
             user= {}
             user['name'] = username
-            user['password'] = password
+            user['password'] = hashpw(password.encode('utf-8'), gensalt()).decode("utf-8")
             logger.info("User password created")
             user= offerotp(user, app_name)
             def_update_user(user)
