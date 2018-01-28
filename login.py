@@ -2,6 +2,7 @@ import json, enum
 import pyotp, qrcode
 import os
 import logging
+from getpass import getpass
 
 #-----------------------Functions----------------------------------------
 
@@ -34,7 +35,7 @@ def offerotp(user, app_name):
         qrcode.QRCode.print_ascii(qr)
         
 #Verify user input OTP, uses validity window of 1
-        if verify_otp(user, input()):
+        if verify_otp(user, getpass()):
             user['otp_enabled'] = True
             def_update_user(user)
         else:
@@ -68,8 +69,7 @@ def login(app_name, payload = None):
     print("Username: ")
     username = input ()
 
-    print("Password: ")
-    password = input ()
+    password = getpass("Password: ")
 
 #Load the details of the user from file
     user = read_user_file(username)       
@@ -176,15 +176,16 @@ def def_update_user(user):
             json.dump(all_users, outfile)
     
 
-#---------------------Global Variabled------------------------------
+#---------------------Global Variables------------------------------
 all_users = {}
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 APPLICATION_NAME = "Secure App"
 DATA_DIR = 'data/'
 USERS_FILE = DATA_DIR + "users.users"
+PARAMETERS_FILE = DATA_DIR + "login.txt"
 
 global options
 
@@ -207,7 +208,7 @@ if __name__ == "__main__":
         import sys
 
         from SimpleParameters import SimpleParameters
-        parser = SimpleParameters("data/login.txt")
+        parser = SimpleParameters(PARAMETERS_FILE )
         (options, args) = parser.resolve_parameters(sys.argv)
 
         logger.debug("Input parameters:{}".format(options))        

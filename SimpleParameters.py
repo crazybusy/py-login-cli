@@ -159,7 +159,7 @@ if __name__=="__main__":
                 parser.resolve_parameters(sys.argv)            
 
             if(options.file):
-                parser = SimpleParameters()
+                parser = SimpleParameters(options.file)
                 (options, args) =\
                     parser.resolve_parameters(args)
                 parser.parser.print_help()

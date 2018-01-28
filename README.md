@@ -1,6 +1,10 @@
 # py-login-cli
 Command line login for python applications including suppport for OTP via Authenticator Apps
 
+Dependancies
+It uses my own SimpleParameters to evaluate command line parameters, hence it is published alongside.
+There is file login.txt in the data directory that contains the parameters this application accepts on the command line. The Users Master file is also housed there.
+
 Usage:
 Pass the application you would like to add login to add as parameter on the command line
 For e.g.
