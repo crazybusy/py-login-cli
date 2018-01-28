@@ -1,0 +1,18 @@
+{
+"version":"Version 1.0",
+"description":"Description for the application",
+"parameters":{
+"create":{"short":"-c",	"long":"--create",
+	"default" : "false",
+	"help": "Allows to create the user if it doesnt exist"},
+"no_otp":{"short":"-n", "long":"--no-otp",
+	"default" : "false",
+	"help":"login without the otp even if it is enabled. Safe mode, use password"},
+"offer_otp":{"short":"-o","long":"--offer-otp",
+	"default" : "true", 
+	"help":"Offer the option of using the OTP to the user"},
+"run_no_user":{"short":"-r","long":"--run-no-user",
+	"default" : "false",
+	"help":"Run the payload application even if the user is not available"}
+}
+}
