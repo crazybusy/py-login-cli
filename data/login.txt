@@ -1,6 +1,6 @@
 {
 "version":"Version 1.0",
-"description":"Description for the application",
+"description":"Command line login for python applications including suppport for OTP via Authenticator Apps",
 "parameters":{
 "create":{"short":"-c",	"long":"--create",
 	"default" : "false",
