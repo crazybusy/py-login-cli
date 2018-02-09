@@ -21,7 +21,7 @@ for now the password is considered a better option
 '''
 def offerotp(user, app_name):
     
-    print("Would you like to use OTP instead of password?(Y/N)")
+    print("Would you like to use OTP instead of password?(Y/N): " ,end='')
 
     choice= input();
     if choice == 'Y' or choice == 'y':
@@ -38,11 +38,10 @@ def offerotp(user, app_name):
         
 #Verify user input OTP, uses validity window of 1
         if verify_otp(user, getpass()):
-            user['otp_enabled'] = True
-            def_update_user(user)
+            user['otp_enabled'] = True            
         else:
             user['otp_enabled'] = False
-            
+
         logger.info("User enabled with OTP: {}".format(
                 user['otp_enabled'] ))
 
@@ -68,7 +67,7 @@ def login(app_name, payload = None):
     status = 0
 
 #Show the login prompt
-    print("Username: ")
+    print("Username: ",end='')
     username = input ()
 
     password = getpass("Password: ")
@@ -99,6 +98,8 @@ OTP Support
                 if options.offer_otp and\
                     not(user.get('otp_enabled')):
                     user= offerotp(user, app_name)
+        #Update the user with the choice. In a more sophisticated application this would be done only when something changes
+                    def_update_user(user)
 #If everything is okay, then login and execute payload                    
                 status = login_success(user, payload)
             else:
@@ -131,12 +132,12 @@ OTP Support
 #--------------------Helper Methods--------------------------------------
 #If everything is okay, then login and execute payload
 def login_success(user, payload):    
-    logger.info ("Login successfull")
+    logger.info ("Login successfull for user %s" % user)
     return run_application(payload)    
 
 #If login failed, execute payload without user
 def login_failed(user, payload, fail_reason):
-    logger.info ("Login failed: {}".format(fail_reason))
+    logger.info ("Login failed for user {} with reason: {}".format(user, fail_reason))
     if options.run_no_user:
         return run_application(payload)
     return
@@ -155,6 +156,7 @@ def verify_otp(user, otp, totp = None):
 
 def run_application(args):
     from subprocess import run
+    logger.debug("Running application: %s" % args)
     run(args)
     return
 
@@ -186,7 +188,7 @@ all_users = {}
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-APPLICATION_NAME = "Secure App"
+APPLICATION_NAME = "login_cli"
 DATA_DIR = 'data/'
 USERS_FILE = DATA_DIR + "users.users"
 PARAMETERS_FILE = DATA_DIR + "login.txt"
@@ -218,7 +220,7 @@ if __name__ == "__main__":
         logger.debug("Input parameters:{}".format(options))        
         
         if(len(args) > 1):
-            payload = args
+            payload = args[1:]
         else:
             payload = "python --version"
         status = login(app_name = APPLICATION_NAME,
