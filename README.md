@@ -2,8 +2,7 @@
 Easy Command line login functionality for any application including suppport for OTP via Authenticator Apps 
 
 Dependencies: 
-It uses my own **SimpleParameters** to evaluate command line parameters, hence it is published alongside.
-There is file  **login.txt** in the *data directory* that contains the parameters this application accepts on the command line. 
+It uses my own **simple_parameters** to evaluate command line parameters. There is file  **login.txt** in the *data directory* that contains the parameters this application accepts on the command line. 
 The **Users Master file** is also housed there.
 
 Other than that it uses pyotp, qrcode and bcrypt. All are available via pip
@@ -30,3 +29,8 @@ Options:
   -n, --no-otp       login without the otp even if it is enabled. Safe mode, use password  
   -o, --offer-otp    Offer the option of using the OTP to the user  
   -r, --run-no-user  Run the payload application even if the user is not available
+
+
+TODO's
+* Take username and password on the command line
+* Allow to specify program to run as option in addition to a positional argument. What if both are specified on the command line??

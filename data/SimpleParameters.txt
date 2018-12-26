@@ -1,9 +1,0 @@
-{
-"version": "1.0",
-"Description": "Simple command line parameter parser RAD tool",
-"parameters":{
-"file":{
-"short": "-f", "long":"--file", "type":"string"
-}
-}
-}

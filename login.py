@@ -213,8 +213,8 @@ if __name__ == "__main__":
     try:        
         import sys
 
-        from SimpleParameters import SimpleParameters
-        parser = SimpleParameters(PARAMETERS_FILE )
+        from simple_parameters import simple_parameters
+        parser = simple_parameters.SimpleParser(PARAMETERS_FILE )
         (options, args) = parser.resolve_parameters(sys.argv)
 
         logger.debug("Input parameters:{}".format(options))        
