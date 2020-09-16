@@ -195,7 +195,6 @@ PARAMETERS_FILE = DATA_DIR + "login.txt"
 
 global options
 
-
 def enum(*args):
     #enums = dict(zip(args, range(len(args))))
     enums = dict(zip(args, args))
